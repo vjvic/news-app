@@ -44,6 +44,7 @@ const Layout = ({ children, window }) => {
       </div>
 
       {/*menu items */}
+
       <Divider />
 
       <List>
@@ -101,6 +102,7 @@ const Layout = ({ children, window }) => {
       </AppBar>
 
       {/*side drawer*/}
+
       <nav className={classes.drawer}>
         <Hidden smUp implementation="css">
           <Drawer
@@ -129,6 +131,8 @@ const Layout = ({ children, window }) => {
           </Drawer>
         </Hidden>
       </nav>
+
+      {/*  main content */}
 
       <Container maxWidth="xl">
         <main>

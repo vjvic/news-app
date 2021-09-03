@@ -9,6 +9,7 @@ import TrendingUpOutlinedIcon from "@material-ui/icons/TrendingUpOutlined";
 import MovieOutlinedIcon from "@material-ui/icons/MovieOutlined";
 import FilterVintageOutlinedIcon from "@material-ui/icons/FilterVintageOutlined";
 import SportsEsportsOutlinedIcon from "@material-ui/icons/SportsEsportsOutlined";
+import LanguageIcon from "@material-ui/icons/Language";
 
 export const menuItems = [
   {
@@ -17,53 +18,58 @@ export const menuItems = [
     path: "/",
   },
   {
+    text: "News",
+    icon: <LanguageIcon />,
+    path: "/categories/news",
+  },
+  {
     text: "World",
     icon: <PublicOutlinedIcon />,
-    path: "/world",
+    path: "/categories/world",
   },
   {
     text: "Sports",
     icon: <SportsBaseballOutlinedIcon />,
-    path: "/sports",
+    path: "/categories/sports",
   },
   {
     text: "Tech",
     icon: <MemoryOutlinedIcon />,
-    path: "/tech",
+    path: "/categories/tech",
   },
   {
     text: "Finance",
     icon: <AttachMoneyOutlinedIcon />,
-    path: "/finance",
+    path: "/categories/finance",
   },
   {
     text: "Politics",
     icon: <GavelOutlinedIcon />,
-    path: "/politics",
+    path: "/categories/politics",
   },
   {
     text: "Business",
     icon: <BusinessCenterOutlinedIcon />,
-    path: "/business",
+    path: "/categories/business",
   },
   {
     text: "Economics",
     icon: <TrendingUpOutlinedIcon />,
-    path: "/economics",
+    path: "/categories/economics",
   },
   {
     text: "Entertainment",
     icon: <MovieOutlinedIcon />,
-    path: "/entertainment",
+    path: "/categories/entertainment",
   },
   {
     text: "Beauty",
     icon: <FilterVintageOutlinedIcon />,
-    path: "/beauty",
+    path: "/categories/beauty",
   },
   {
     text: "Gaming",
     icon: <SportsEsportsOutlinedIcon />,
-    path: "/gaming",
+    path: "/categories/gaming",
   },
 ];

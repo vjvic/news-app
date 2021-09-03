@@ -11,63 +11,148 @@ import {
   Chip,
   Link,
 } from "@material-ui/core";
+import Skeleton from "@material-ui/lab/Skeleton";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 import useStyles from "./styles";
 import Truncate from "react-truncate";
+import noImage from "assets/image/no_image.jpg";
 
-const NewsItem = ({ item }) => {
+const NewsItem = ({ item, loading }) => {
   const classes = useStyles();
 
+  const {
+    title,
+    media,
+    topic,
+    author,
+    link,
+    summary,
+    published_date,
+    clean_url,
+  } = item;
+
+  let image = media ? media : noImage;
+
+  // news title
+
   const itemTitle = (
-    <Typography variant="h6">
+    <Link variant="h6" component="a" href={link}>
       <Truncate lines={1} ellipsis={<span>...</span>}>
-        {item.title}
+        {title}
       </Truncate>
-    </Typography>
+    </Link>
   );
 
   return (
-    <Grid item xs={12} sm={6} md={4} lg={3}>
+    <Grid item xs={12} sm={12} md={6} lg={3}>
       <Card className={classes.root}>
-        <CardHeader title={itemTitle} subheader={item.published_date} />
+        {/* card header */}
 
-        <CardMedia
-          className={classes.media}
-          src={item.media}
-          title={item.title}
-          component="img"
+        <CardHeader
+          title={
+            loading ? (
+              <Skeleton animation="wave" height={30} width="90%" />
+            ) : (
+              itemTitle
+            )
+          }
+          subheader={
+            loading ? (
+              <Skeleton animation="wave" height={20} width="20%" />
+            ) : (
+              published_date
+            )
+          }
         />
 
+        {/*  card image */}
+
+        {loading ? (
+          <Skeleton variant="rect" width="100%" height={200} />
+        ) : (
+          <div className={classes.mediaWrapper}>
+            <CardMedia
+              className={classes.media}
+              src={image}
+              title={title}
+              component="img"
+            />
+          </div>
+        )}
+
+        {/* card content */}
+
         <CardContent>
-          <Chip label={item.topic} color="primary" />
+          {loading ? (
+            <Skeleton animation="wave" height={30} width="30%" />
+          ) : (
+            <Chip label={topic} color="primary" />
+          )}
 
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            companent="small"
-            className={classes.author}
-          >
-            Author: {item.author}
-          </Typography>
-
-          <Typography variant="body2" component="p" className={classes.body}>
-            <Truncate
-              lines={3}
-              ellipsis={
-                <span>
-                  ... <Link href={item.link}>Read more</Link>
-                </span>
-              }
+          {loading ? (
+            <Skeleton animation="wave" height={10} width="40%" />
+          ) : (
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              companent="small"
+              className={classes.author}
             >
-              {item.summary}
-            </Truncate>
-          </Typography>
+              Author: {author}
+            </Typography>
+          )}
+
+          {loading ? (
+            <Skeleton animation="wave" height={10} width="40%" />
+          ) : (
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              companent="small"
+              className={classes.author}
+            >
+              url: {clean_url}
+            </Typography>
+          )}
+
+          {loading ? (
+            <React.Fragment>
+              <Skeleton
+                animation="wave"
+                height={20}
+                style={{ margin: "10px 0" }}
+              />
+              <Skeleton
+                animation="wave"
+                height={20}
+                style={{ marginBottom: 6 }}
+              />
+              <Skeleton animation="wave" height={20} width="80%" />
+            </React.Fragment>
+          ) : (
+            <Typography variant="body2" component="p" className={classes.body}>
+              <Truncate lines={3} ellipsis={<span>...</span>}>
+                {summary}
+              </Truncate>
+            </Typography>
+          )}
         </CardContent>
 
+        {/* card actions */}
+
         <CardActions>
-          <IconButton>
-            <BookmarkIcon />
-          </IconButton>
+          {loading ? (
+            <Skeleton
+              animation="wave"
+              variant="circle"
+              width={30}
+              height={30}
+            />
+          ) : (
+            <IconButton>
+              <BookmarkIcon />
+            </IconButton>
+          )}
         </CardActions>
       </Card>
     </Grid>
