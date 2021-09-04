@@ -9,6 +9,7 @@ import TrendingUpOutlinedIcon from "@material-ui/icons/TrendingUpOutlined";
 import MovieOutlinedIcon from "@material-ui/icons/MovieOutlined";
 import FilterVintageOutlinedIcon from "@material-ui/icons/FilterVintageOutlined";
 import SportsEsportsOutlinedIcon from "@material-ui/icons/SportsEsportsOutlined";
+import FastfoodOutlinedIcon from "@material-ui/icons/FastfoodOutlined";
 import LanguageIcon from "@material-ui/icons/Language";
 
 export const menuItems = [
@@ -66,6 +67,11 @@ export const menuItems = [
     text: "Beauty",
     icon: <FilterVintageOutlinedIcon />,
     path: "/categories/beauty",
+  },
+  {
+    text: "Food",
+    icon: <FastfoodOutlinedIcon />,
+    path: "/categories/food",
   },
   {
     text: "Gaming",

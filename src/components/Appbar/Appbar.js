@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useStyles from "./styles";
 import {
   AppBar,
@@ -10,9 +10,23 @@ import {
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import MenuIcon from "@material-ui/icons/Menu";
+import { useHistory } from "react-router";
 
 const Appbar = ({ handleDrawerToggle }) => {
+  const [query, setQuery] = useState("");
   const classes = useStyles();
+  const history = useHistory();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (query) {
+      history.push(`/${query}`);
+    }
+
+    setQuery("");
+  };
+
   return (
     <AppBar position="fixed" className={classes.appBar} elevation={0}>
       <Toolbar>
@@ -26,19 +40,22 @@ const Appbar = ({ handleDrawerToggle }) => {
           <MenuIcon />
         </IconButton>
 
-        <div className={classes.search}>
+        <form onSubmit={handleSubmit} className={classes.search}>
           <div className={classes.searchIcon}>
             <SearchIcon />
           </div>
           <InputBase
             placeholder="Search…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
             classes={{
               root: classes.inputRoot,
               input: classes.inputInput,
             }}
             inputProps={{ "aria-label": "search" }}
           />
-        </div>
+        </form>
+
         <div className={classes.grow} />
         <Button color="inherit">Login</Button>
       </Toolbar>

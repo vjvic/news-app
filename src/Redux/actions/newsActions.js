@@ -10,7 +10,7 @@ export const fetchNews = () => async (dispatch) => {
   dispatch({ type: ActionTypes.START_LOADING });
 
   const response = await newsApi.get("/latest_headlines", {
-    params: { countries: "ph", lang: "en", page: "1", page_size: "25" },
+    params: { countries: "ph", lang: "en", page: "1", page_size: "24" },
     headers,
   });
 
@@ -28,11 +28,30 @@ export const fetchCategories = (value) => async (dispatch) => {
       topic: value,
       lang: "en",
       page: "1",
-      page_size: "25",
+      page_size: "24",
     },
     headers,
   });
 
   dispatch({ type: ActionTypes.FETCH_CATEGORIES, payload: response.data });
+  dispatch({ type: ActionTypes.END_LOADING });
+};
+
+export const searchNews = (query) => async (dispatch) => {
+  dispatch({ type: ActionTypes.START_LOADING });
+
+  const response = await newsApi.get("/search", {
+    params: {
+      q: query,
+      countries: "ph",
+      lang: "en",
+      page: "1",
+      page_size: "24",
+    },
+    headers,
+  });
+
+  dispatch({ type: ActionTypes.FETCH_LATEST, payload: response.data });
+
   dispatch({ type: ActionTypes.END_LOADING });
 };
