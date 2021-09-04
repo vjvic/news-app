@@ -16,6 +16,7 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 import useStyles from "./styles";
 import Truncate from "react-truncate";
 import noImage from "assets/image/no_image.jpg";
+import { format } from "date-fns";
 
 const NewsItem = ({ item, loading }) => {
   const classes = useStyles();
@@ -33,10 +34,15 @@ const NewsItem = ({ item, loading }) => {
 
   let image = media ? media : noImage;
 
+  //convert date and time
+
+  const date = new Date(published_date);
+  const publishedDate = format(date, "MM/dd/yyyy 'at' h:mm a");
+
   // news title
 
   const itemTitle = (
-    <Link variant="h6" component="a" href={link}>
+    <Link variant="h6" color="inherit" component="a" href={link}>
       <Truncate lines={1} ellipsis={<span>...</span>}>
         {title}
       </Truncate>
@@ -60,7 +66,7 @@ const NewsItem = ({ item, loading }) => {
             loading ? (
               <Skeleton animation="wave" height={20} width="20%" />
             ) : (
-              published_date
+              publishedDate
             )
           }
         />

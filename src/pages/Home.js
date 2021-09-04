@@ -1,47 +1,20 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import NewsItem from "components/News/NewsItem/NewsItem";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
+import { fetchNews } from "Redux/actions/newsActions";
+import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
-  const [news, setNews] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const getNews = () => {
-    setLoading(true);
-    const options = {
-      method: "GET",
-      url: "https://api.newscatcherapi.com/v2/latest_headlines",
-      params: { countries: "ph", lang: "en", page: "1", page_size: "25" },
-      headers: {
-        "x-api-key": process.env.REACT_APP_API_KEY,
-        "x-rapidapi-host": "free-news.p.rapidapi.com",
-      },
-    };
-
-    axios
-      .request(options)
-      .then(function (response) {
-        setNews(response.data);
-        setLoading(false);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  };
+  const { news } = useSelector((state) => state.allNews);
+  const { loading } = useSelector((state) => state.allNews);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getNews();
-  }, []);
-
-  console.log(news);
+    dispatch(fetchNews());
+  }, [dispatch]);
 
   return (
     <>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Latest News
-      </Typography>
-
       <Grid container spacing={3}>
         {news.articles &&
           news.articles.map((item) => (
