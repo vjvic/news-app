@@ -4,24 +4,28 @@ import { useSelector, useDispatch } from "react-redux";
 import { searchNews } from "Redux/actions/newsActions";
 import NewsItem from "components/News/NewsItem/NewsItem";
 import { Grid } from "@material-ui/core";
+import Header from "components/Header/Header";
 
 const Result = () => {
   const { value } = useParams();
   const dispatch = useDispatch();
-  const { news } = useSelector((state) => state.allNews);
-  const { loading } = useSelector((state) => state.allNews);
+  const { news, loading } = useSelector((state) => state.allNews);
+  const { country } = useSelector((state) => state.countries);
 
   useEffect(() => {
-    dispatch(searchNews(value));
-  }, [dispatch, value]);
+    dispatch(searchNews(value, country));
+  }, [dispatch, value, country]);
 
   return (
-    <Grid container spacing={3}>
-      {news.articles &&
-        news.articles.map((item) => (
-          <NewsItem key={item._id} item={item} loading={loading} />
-        ))}
-    </Grid>
+    <>
+      <Header text={`search results for: "${value}"`} />
+      <Grid container spacing={3}>
+        {news.articles &&
+          news.articles.map((item) => (
+            <NewsItem key={item._id} item={item} loading={loading} />
+          ))}
+      </Grid>
+    </>
   );
 };
 

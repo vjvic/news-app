@@ -6,11 +6,13 @@ const headers = {
   "x-rapidapi-host": "free-news.p.rapidapi.com",
 };
 
-export const fetchNews = () => async (dispatch) => {
+//fetch latest news
+
+export const fetchNews = (counrty) => async (dispatch) => {
   dispatch({ type: ActionTypes.START_LOADING });
 
   const response = await newsApi.get("/latest_headlines", {
-    params: { countries: "ph", lang: "en", page: "1", page_size: "24" },
+    params: { countries: counrty, lang: "en", page: "1", page_size: "24" },
     headers,
   });
 
@@ -19,12 +21,14 @@ export const fetchNews = () => async (dispatch) => {
   dispatch({ type: ActionTypes.END_LOADING });
 };
 
-export const fetchCategories = (value) => async (dispatch) => {
+//fetch news by category
+
+export const fetchCategories = (value, country) => async (dispatch) => {
   dispatch({ type: ActionTypes.START_LOADING });
 
   const response = await newsApi.get("/latest_headlines", {
     params: {
-      countries: "ph",
+      countries: country,
       topic: value,
       lang: "en",
       page: "1",
@@ -37,13 +41,15 @@ export const fetchCategories = (value) => async (dispatch) => {
   dispatch({ type: ActionTypes.END_LOADING });
 };
 
-export const searchNews = (query) => async (dispatch) => {
+//search news
+
+export const searchNews = (query, country) => async (dispatch) => {
   dispatch({ type: ActionTypes.START_LOADING });
 
   const response = await newsApi.get("/search", {
     params: {
       q: query,
-      countries: "ph",
+      countries: country,
       lang: "en",
       page: "1",
       page_size: "24",
