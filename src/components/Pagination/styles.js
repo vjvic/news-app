@@ -2,10 +2,8 @@ import { makeStyles } from "@material-ui/core";
 
 export default makeStyles((theme) => ({
   root: {
-    display: "flex",
-    background: "#F8F9FA",
-    minHeight: "100vh",
+    "& > *": {
+      marginTop: theme.spacing(3),
+    },
   },
-
-  toolbar: theme.mixins.toolbar,
 }));
