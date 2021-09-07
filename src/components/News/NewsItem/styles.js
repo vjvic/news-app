@@ -24,4 +24,10 @@ export default makeStyles((theme) => ({
   mediaWrapper: {
     height: 200,
   },
+
+  topic: {
+    display: "flex",
+    alignItems: "center",
+    gridGap: 4,
+  },
 }));

@@ -57,9 +57,7 @@ const Appbar = ({ handleDrawerToggle }) => {
         </form>
 
         <div className={classes.grow} />
-        <Button color="primary" variant="contained">
-          Login
-        </Button>
+        <Button>Login</Button>
       </Toolbar>
       <Divider />
     </AppBar>

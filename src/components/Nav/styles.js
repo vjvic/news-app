@@ -19,7 +19,9 @@ export default makeStyles((theme) => ({
   },
 
   title: {
-    textAlign: "center",
     padding: "1rem",
+    display: "flex",
+    alignItems: "center",
+    gridGap: 10,
   },
 }));

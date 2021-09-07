@@ -12,7 +12,8 @@ import {
   Divider,
 } from "@material-ui/core";
 import { useHistory, useLocation } from "react-router-dom";
-import { menuItems } from "./data";
+import { menuItems } from "./menuItems";
+import newsIcon from "assets/image/svg/newsIcon.svg";
 
 const Nav = ({ mobileOpen, handleDrawerToggle, window }) => {
   const classes = useStyles();
@@ -27,6 +28,7 @@ const Nav = ({ mobileOpen, handleDrawerToggle, window }) => {
     <div>
       <div>
         <Typography variant="h5" className={classes.title}>
+          <img src={newsIcon} alt="newsicon" width={40} />
           NewsHunt
         </Typography>
       </div>

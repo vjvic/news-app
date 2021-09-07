@@ -8,7 +8,6 @@ import {
   CardActions,
   IconButton,
   Grid,
-  Chip,
   Link,
 } from "@material-ui/core";
 import Skeleton from "@material-ui/lab/Skeleton";
@@ -17,6 +16,7 @@ import useStyles from "./styles";
 import Truncate from "react-truncate";
 import noImage from "assets/image/no_image.jpg";
 import { format } from "date-fns";
+import { topicItems } from "./topicItems";
 
 const NewsItem = ({ item, loading }) => {
   const classes = useStyles();
@@ -48,6 +48,11 @@ const NewsItem = ({ item, loading }) => {
       </Truncate>
     </Link>
   );
+
+  //find news specific topic
+  const findTopic = topic
+    ? topicItems.find((item) => item.text === topic)
+    : null;
 
   return (
     <Grid item xs={12} sm={12} md={6} lg={3}>
@@ -92,7 +97,13 @@ const NewsItem = ({ item, loading }) => {
           {loading ? (
             <Skeleton animation="wave" height={30} width="30%" />
           ) : (
-            <Chip label={topic} color="primary" />
+            <Typography
+              color="textSecondary"
+              companent="small"
+              className={classes.topic}
+            >
+              {findTopic && findTopic.icon} {findTopic && findTopic.text}
+            </Typography>
           )}
 
           {loading ? (
