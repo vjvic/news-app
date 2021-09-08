@@ -18,7 +18,6 @@ export const fetchNews = (counrty, page) => async (dispatch) => {
     });
 
     dispatch({ type: ActionTypes.FETCH_LATEST, payload: response.data });
-
     dispatch({ type: ActionTypes.END_LOADING });
   } catch (error) {
     console.log(error);
@@ -66,7 +65,6 @@ export const searchNews = (query, country, page) => async (dispatch) => {
     });
 
     dispatch({ type: ActionTypes.FETCH_LATEST, payload: response.data });
-
     dispatch({ type: ActionTypes.END_LOADING });
   } catch (error) {
     console.log(error);

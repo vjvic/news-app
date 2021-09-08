@@ -30,10 +30,11 @@ const Result = () => {
 
       {/* news grid */}
       <Grid container spacing={3}>
-        {news.articles &&
-          news.articles.map((item) => (
-            <NewsItem key={item._id} item={item} loading={loading} />
-          ))}
+        {loading
+          ? "loading..."
+          : news.articles.map((item) => (
+              <NewsItem key={item._id} item={item} loading={loading} />
+            ))}
       </Grid>
 
       {/*  paginate */}

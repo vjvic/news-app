@@ -22,6 +22,14 @@ export default makeStyles((theme) => ({
     padding: "1rem",
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
     gridGap: 10,
+  },
+
+  credits: {
+    textAlign: "center",
+    position: "absolute",
+    bottom: 5,
+    left: 25,
   },
 }));

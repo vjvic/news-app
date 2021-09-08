@@ -10,6 +10,7 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
+  Link,
 } from "@material-ui/core";
 import { useHistory, useLocation } from "react-router-dom";
 import { menuItems } from "./menuItems";
@@ -50,6 +51,20 @@ const Nav = ({ mobileOpen, handleDrawerToggle, window }) => {
           </ListItem>
         ))}
       </List>
+
+      {/*   credits */}
+
+      <Typography
+        variant="body2"
+        component="p"
+        color="textSecondary"
+        className={classes.credits}
+      >
+        powered by{" "}
+        <Link href="https://newscatcherapi.com/" color="inherit">
+          <strong>{"</newscatcher>"}</strong>
+        </Link>{" "}
+      </Typography>
     </div>
   );
 
