@@ -10,7 +10,7 @@ const headers = {
 
 export const fetchNews = (counrty, page) => async (dispatch) => {
   try {
-    dispatch({ type: ActionTypes.START_LOADING });
+    dispatch({ type: ActionTypes.START_LOADING, payload: true });
 
     const response = await newsApi.get("/latest_headlines", {
       params: { countries: counrty, lang: "en", page, page_size: "24" },
@@ -18,7 +18,7 @@ export const fetchNews = (counrty, page) => async (dispatch) => {
     });
 
     dispatch({ type: ActionTypes.FETCH_LATEST, payload: response.data });
-    dispatch({ type: ActionTypes.END_LOADING });
+    dispatch({ type: ActionTypes.END_LOADING, payload: false });
   } catch (error) {
     console.log(error);
   }
@@ -28,7 +28,7 @@ export const fetchNews = (counrty, page) => async (dispatch) => {
 
 export const fetchCategories = (value, country, page) => async (dispatch) => {
   try {
-    dispatch({ type: ActionTypes.START_LOADING });
+    /* dispatch({ type: ActionTypes.START_LOADING }); */
 
     const response = await newsApi.get("/latest_headlines", {
       params: {
@@ -42,7 +42,7 @@ export const fetchCategories = (value, country, page) => async (dispatch) => {
     });
 
     dispatch({ type: ActionTypes.FETCH_CATEGORIES, payload: response.data });
-    dispatch({ type: ActionTypes.END_LOADING });
+    /*   dispatch({ type: ActionTypes.END_LOADING }); */
   } catch (error) {
     console.log(error);
   }
@@ -52,7 +52,7 @@ export const fetchCategories = (value, country, page) => async (dispatch) => {
 
 export const searchNews = (query, country, page) => async (dispatch) => {
   try {
-    dispatch({ type: ActionTypes.START_LOADING });
+    /*  dispatch({ type: ActionTypes.START_LOADING }); */
     const response = await newsApi.get("/search", {
       params: {
         q: query,
@@ -65,7 +65,7 @@ export const searchNews = (query, country, page) => async (dispatch) => {
     });
 
     dispatch({ type: ActionTypes.FETCH_LATEST, payload: response.data });
-    dispatch({ type: ActionTypes.END_LOADING });
+    /* dispatch({ type: ActionTypes.END_LOADING }); */
   } catch (error) {
     console.log(error);
   }

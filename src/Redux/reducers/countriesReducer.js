@@ -13,9 +13,9 @@ export const countriesReducer = (state = initialState, { type, payload }) => {
     case ActionTypes.SELECT_COUNTRY:
       return { ...state, country: payload };
     case ActionTypes.START_LOADING:
-      return { ...state, loading: true };
+      return { ...state, loading: payload };
     case ActionTypes.END_LOADING:
-      return { ...state, loading: false };
+      return { ...state, loading: payload };
     default:
       return state;
   }

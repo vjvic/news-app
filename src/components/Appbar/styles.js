@@ -63,4 +63,9 @@ export default makeStyles((theme) => ({
       display: "none",
     },
   },
+
+  btnWrapper: {
+    display: "flex",
+    gridGap: 10,
+  },
 }));

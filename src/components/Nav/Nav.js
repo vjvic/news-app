@@ -12,15 +12,21 @@ import {
   Divider,
   Link,
 } from "@material-ui/core";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { useHistory, useLocation } from "react-router-dom";
 import { menuItems } from "./menuItems";
 import newsIcon from "assets/image/svg/newsIcon.svg";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "Redux/actions/authActions";
 
 const Nav = ({ mobileOpen, handleDrawerToggle, window }) => {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
   const theme = useTheme();
+  const dispatch = useDispatch();
+
+  const { currentUser } = useSelector((state) => state.auth);
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -50,6 +56,16 @@ const Nav = ({ mobileOpen, handleDrawerToggle, window }) => {
             <ListItemText primary={item.text} />
           </ListItem>
         ))}
+
+        {currentUser && (
+          <>
+            <Divider />
+            <ListItem button onClick={() => dispatch(logout())}>
+              <ListItemIcon>{<ExitToAppIcon />}</ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItem>
+          </>
+        )}
       </List>
 
       {/*   credits */}
