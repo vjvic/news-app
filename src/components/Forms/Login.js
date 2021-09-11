@@ -8,13 +8,16 @@ import {
   Box,
   Typography,
   Button,
+  capitalize,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import { login } from "Redux/actions/authActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = ({ openLogin, handleCloseLogin }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { errorText } = useSelector((state) => state.ui);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +27,8 @@ const Login = ({ openLogin, handleCloseLogin }) => {
 
     if (email && password) {
       dispatch(login(email, password));
+
+      handleCloseLogin();
     }
 
     setEmail("");
@@ -46,6 +51,11 @@ const Login = ({ openLogin, handleCloseLogin }) => {
           <Typography variant="h4" component="h2">
             Login
           </Typography>
+          {errorText && (
+            <Alert severity="error" className={classes.error}>
+              {capitalize(errorText.replace(/_/g, " ").toLowerCase())}
+            </Alert>
+          )}
           <form
             className={classes.form}
             onSubmit={handleSubmit}

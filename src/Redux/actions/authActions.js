@@ -3,33 +3,44 @@ import { ActionTypes } from "Redux/constants/action-types";
 
 //login user
 export const login = (email, password) => async (dispatch) => {
-  const response = await authApi.post(
-    `/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
-    {
-      email: email,
-      password: password,
-    }
-  );
+  try {
+    const response = await authApi.post(
+      `/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
+      {
+        email: email,
+        password: password,
+      }
+    );
 
-  localStorage.setItem("token", response.data.idToken);
+    localStorage.setItem("token", response.data.idToken);
 
-  dispatch({ type: ActionTypes.GET_TOKEN, payload: response.data.idToken });
+    dispatch({ type: ActionTypes.GET_TOKEN, payload: response.data.idToken });
+  } catch (error) {
+    dispatch({
+      type: ActionTypes.SET_ERROR,
+      payload: error.response.data.error.message,
+    });
+  }
 };
 
 //signup user
 export const signup = (email, password) => async (dispatch) => {
-  const response = await authApi.post(
-    `/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
-    {
-      email: email,
-      password: password,
-      returnSecureToken: true,
-    }
-  );
+  try {
+    const response = await authApi.post(
+      `/accountss:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
+      {
+        email: email,
+        password: password,
+        returnSecureToken: true,
+      }
+    );
 
-  localStorage.setItem("token", response.data.idToken);
+    localStorage.setItem("token", response.data.idToken);
 
-  dispatch({ type: ActionTypes.GET_TOKEN, payload: response.data.idToken });
+    dispatch({ type: ActionTypes.GET_TOKEN, payload: response.data.idToken });
+  } catch {
+    dispatch({ type: ActionTypes.SET_ERROR, payload: "Failed to signup" });
+  }
 };
 
 //get user data

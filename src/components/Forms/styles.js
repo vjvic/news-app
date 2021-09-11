@@ -26,4 +26,8 @@ export default makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     width: "100%",
   },
+
+  error: {
+    marginTop: theme.spacing(2),
+  },
 }));

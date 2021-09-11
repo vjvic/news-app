@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React /* , { useState } */ from "react";
 import useStyles from "./styles";
 import {
   Backdrop,
@@ -9,27 +9,38 @@ import {
   Typography,
   Button,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import { signup } from "Redux/actions/authActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().min(8).required(),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
+});
 
 const Signup = ({ openSignup, handleCloseSignup }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { errorText } = useSelector((state) => state.ui);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (email && password && confirmPassword) {
-      dispatch(signup(email, password));
-    }
-
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
+  const onSubmit = (data, e) => {
+    dispatch(signup(data.email, data.password));
+    e.target.reset();
+    handleCloseSignup();
   };
 
   return (
@@ -48,36 +59,44 @@ const Signup = ({ openSignup, handleCloseSignup }) => {
           <Typography variant="h4" component="h2">
             Signup
           </Typography>
+          {errorText && (
+            <Alert severity="error" className={classes.error}>
+              {errorText}
+            </Alert>
+          )}
           <form
             className={classes.form}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             autoComplete="off"
           >
             <Box py={1}>
               <TextField
+                error={errors?.email?.message.length > 0}
                 label="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                {...register("email")}
+                helperText={errors?.email?.message}
                 fullWidth
               />
             </Box>
 
             <Box py={1}>
               <TextField
+                error={errors?.password?.message.length > 0}
                 label="Password"
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                {...register("password")}
+                helperText={errors?.password?.message}
                 fullWidth
               />
             </Box>
 
             <Box py={1}>
               <TextField
+                error={errors?.confirmPassword?.message.length > 0}
                 label="Confirm Password"
                 type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                {...register("confirmPassword")}
+                helperText={errors?.confirmPassword?.message}
                 fullWidth
               />
             </Box>
