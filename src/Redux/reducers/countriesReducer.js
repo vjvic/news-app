@@ -3,7 +3,6 @@ import { ActionTypes } from "Redux/constants/action-types";
 const initialState = {
   countries: [],
   country: "",
-  loading: true,
 };
 
 export const countriesReducer = (state = initialState, { type, payload }) => {
@@ -12,10 +11,7 @@ export const countriesReducer = (state = initialState, { type, payload }) => {
       return { ...state, countries: payload };
     case ActionTypes.SELECT_COUNTRY:
       return { ...state, country: payload };
-    case ActionTypes.START_LOADING:
-      return { ...state, loading: payload };
-    case ActionTypes.END_LOADING:
-      return { ...state, loading: payload };
+
     default:
       return state;
   }

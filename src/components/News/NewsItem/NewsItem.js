@@ -9,17 +9,23 @@ import {
   IconButton,
   Grid,
   Link,
+  Tooltip,
 } from "@material-ui/core";
-import Skeleton from "@material-ui/lab/Skeleton";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
+import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import useStyles from "./styles";
 import Truncate from "react-truncate";
 import noImage from "assets/image/no_image.jpg";
 import { format } from "date-fns";
 import { topicItems } from "./topicItems";
+import { useSelector, useDispatch } from "react-redux";
+import { addNews, deleteNews } from "Redux/actions/firestoreActions";
 
-const NewsItem = ({ item, loading }) => {
+const NewsItem = ({ item }) => {
   const classes = useStyles();
+  const { currentUser } = useSelector((state) => state.auth);
+  const { savedNews } = useSelector((state) => state.firestore);
+  const dispatch = useDispatch();
 
   const {
     title,
@@ -30,6 +36,7 @@ const NewsItem = ({ item, loading }) => {
     summary,
     published_date,
     clean_url,
+    _id,
   } = item;
 
   let image = media ? media : noImage;
@@ -54,123 +61,90 @@ const NewsItem = ({ item, loading }) => {
     ? topicItems.find((item) => item.text === topic)
     : null;
 
+  const handleSavedNews = () => {
+    dispatch(addNews(currentUser[0].localId, _id, item));
+  };
+
+  let storedNews = savedNews.find((news) => news._id === _id);
+  const isStored = storedNews ? true : false;
+
+  const saveButton = (
+    <>
+      {isStored ? (
+        <Tooltip title="Remove">
+          <IconButton
+            onClick={() => dispatch(deleteNews(currentUser[0].localId, _id))}
+          >
+            <BookmarkIcon />
+          </IconButton>
+        </Tooltip>
+      ) : (
+        <Tooltip title="Save">
+          <IconButton
+            disabled={currentUser.length <= 0 ? true : false}
+            onClick={handleSavedNews}
+          >
+            <BookmarkBorderIcon />
+          </IconButton>
+        </Tooltip>
+      )}
+    </>
+  );
+
   return (
     <Grid item xs={12} sm={12} md={6} lg={3}>
       <Card className={classes.root}>
         {/* card header */}
 
-        <CardHeader
-          title={
-            loading ? (
-              <Skeleton animation="wave" height={30} width="90%" />
-            ) : (
-              itemTitle
-            )
-          }
-          subheader={
-            loading ? (
-              <Skeleton animation="wave" height={20} width="20%" />
-            ) : (
-              publishedDate
-            )
-          }
-        />
+        <CardHeader title={itemTitle} subheader={publishedDate} />
 
         {/*  card image */}
 
-        {loading ? (
-          <Skeleton variant="rect" width="100%" height={200} />
-        ) : (
-          <div className={classes.mediaWrapper}>
-            <CardMedia
-              className={classes.media}
-              src={image}
-              title={title}
-              component="img"
-            />
-          </div>
-        )}
+        <div className={classes.mediaWrapper}>
+          <CardMedia
+            className={classes.media}
+            src={image}
+            title={title}
+            component="img"
+          />
+        </div>
 
         {/* card content */}
 
         <CardContent>
-          {loading ? (
-            <Skeleton animation="wave" height={30} width="30%" />
-          ) : (
-            <Typography
-              color="textSecondary"
-              companent="small"
-              className={classes.topic}
-            >
-              {findTopic && findTopic.icon} {findTopic && findTopic.text}
-            </Typography>
-          )}
-
-          {loading ? (
-            <Skeleton animation="wave" height={10} width="40%" />
-          ) : (
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              companent="small"
-              className={classes.author}
-            >
-              Author: {author}
-            </Typography>
-          )}
-
-          {loading ? (
-            <Skeleton animation="wave" height={10} width="40%" />
-          ) : (
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              companent="small"
-              className={classes.author}
-            >
-              url: {clean_url}
-            </Typography>
-          )}
-
-          {loading ? (
-            <React.Fragment>
-              <Skeleton
-                animation="wave"
-                height={20}
-                style={{ margin: "10px 0" }}
-              />
-              <Skeleton
-                animation="wave"
-                height={20}
-                style={{ marginBottom: 6 }}
-              />
-              <Skeleton animation="wave" height={20} width="80%" />
-            </React.Fragment>
-          ) : (
-            <Typography variant="body2" component="p" className={classes.body}>
-              <Truncate lines={3} ellipsis={<span>...</span>}>
-                {summary}
-              </Truncate>
-            </Typography>
-          )}
+          <Typography
+            color="textSecondary"
+            companent="small"
+            className={classes.topic}
+          >
+            {findTopic && findTopic.icon} {findTopic && findTopic.text}
+          </Typography>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            companent="small"
+            className={classes.author}
+          >
+            Author: {author}
+          </Typography>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            companent="small"
+            className={classes.author}
+          >
+            url: {clean_url}
+          </Typography>
+          <Typography variant="body2" component="p" className={classes.body}>
+            <Truncate lines={3} ellipsis={<span>...</span>}>
+              {summary}
+            </Truncate>
+          </Typography>
         </CardContent>
 
         {/* card actions */}
 
-        <CardActions>
-          {loading ? (
-            <Skeleton
-              animation="wave"
-              variant="circle"
-              width={30}
-              height={30}
-            />
-          ) : (
-            <IconButton>
-              <BookmarkIcon />
-            </IconButton>
-          )}
-        </CardActions>
+        <CardActions>{saveButton}</CardActions>
       </Card>
     </Grid>
   );

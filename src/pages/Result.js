@@ -3,9 +3,10 @@ import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { searchNews } from "Redux/actions/newsActions";
 import NewsItem from "components/News/NewsItem/NewsItem";
-import { Grid } from "@material-ui/core";
+import { Grid, CircularProgress } from "@material-ui/core";
 import Header from "components/Header/Header";
 import Paginate from "components/Pagination/Paginate";
+import useStyles from "./styles";
 
 const Result = () => {
   const { value } = useParams();
@@ -13,6 +14,8 @@ const Result = () => {
   const { news, loading } = useSelector((state) => state.allNews);
   const { country } = useSelector((state) => state.countries);
   const [page, setPage] = useState(1);
+
+  const classes = useStyles();
 
   useEffect(() => {
     dispatch(searchNews(value, country, page));
@@ -22,6 +25,13 @@ const Result = () => {
   const handleChange = (event, value) => {
     setPage(value);
   };
+
+  if (loading)
+    return (
+      <div className={classes.root}>
+        <CircularProgress />
+      </div>
+    );
 
   return (
     <>

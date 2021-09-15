@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import NewsItem from "components/News/NewsItem/NewsItem";
-import { Grid } from "@material-ui/core";
+import { Grid, CircularProgress } from "@material-ui/core";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "Redux/actions/newsActions";
 import Header from "components/Header/Header";
 import Paginate from "components/Pagination/Paginate";
+import useStyles from "./styles";
 
 const Categories = () => {
   const { value } = useParams();
+
+  const classes = useStyles();
 
   const dispatch = useDispatch();
   const { news, loading } = useSelector((state) => state.allNews);
@@ -17,14 +20,19 @@ const Categories = () => {
 
   useEffect(() => {
     dispatch(fetchCategories(value, country, page));
-
-    // eslint-disable-next-line
-  }, [value, country, page]);
+  }, [dispatch, value, country, page]);
 
   //change page
   const handleChange = (event, value) => {
     setPage(value);
   };
+
+  if (loading)
+    return (
+      <div className={classes.root}>
+        <CircularProgress />
+      </div>
+    );
 
   return (
     <>

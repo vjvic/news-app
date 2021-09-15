@@ -14,9 +14,9 @@ export const newsReducer = (state = initialState, { type, payload }) => {
     case ActionTypes.SEARCH_NEWS:
       return { ...state, news: payload };
     case ActionTypes.START_LOADING:
-      return { ...state, loading: payload };
+      return { ...state, loading: true };
     case ActionTypes.END_LOADING:
-      return { ...state, loading: payload };
+      return { ...state, loading: false };
     default:
       return state;
   }

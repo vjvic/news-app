@@ -13,11 +13,13 @@ import {
   Link,
 } from "@material-ui/core";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import { useHistory, useLocation } from "react-router-dom";
 import { menuItems } from "./menuItems";
 import newsIcon from "assets/image/svg/newsIcon.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "Redux/actions/authActions";
+/* import { Link } from "react-router-dom"; */
 
 const Nav = ({ mobileOpen, handleDrawerToggle, window }) => {
   const classes = useStyles();
@@ -57,9 +59,15 @@ const Nav = ({ mobileOpen, handleDrawerToggle, window }) => {
           </ListItem>
         ))}
 
+        <Divider />
+
+        <ListItem button onClick={() => history.push("/saved-news")}>
+          <ListItemIcon>{<BookmarkBorderIcon />}</ListItemIcon>
+          <ListItemText primary="Saved news" />
+        </ListItem>
+
         {currentUser && (
           <>
-            <Divider />
             <ListItem button onClick={() => dispatch(logout())}>
               <ListItemIcon>{<ExitToAppIcon />}</ListItemIcon>
               <ListItemText primary="Logout" />

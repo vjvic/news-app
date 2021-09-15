@@ -17,9 +17,9 @@ export const authReducer = (state = initialState, { type, payload }) => {
     case ActionTypes.USER_LOGOUT:
       return { ...state, token: "", currentUser: "" };
     case ActionTypes.START_LOADING:
-      return { ...state, loading: payload };
+      return { ...state, loading: true };
     case ActionTypes.END_LOADING:
-      return { ...state, loading: payload };
+      return { ...state, loading: false };
     default:
       return state;
   }

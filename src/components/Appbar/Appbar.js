@@ -20,7 +20,7 @@ const Appbar = ({ handleDrawerToggle }) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const { currentUser } = useSelector((state) => state.auth);
+  const { currentUser, loading } = useSelector((state) => state.auth);
 
   const [openLogin, setOpenLogin] = useState(false);
   const [openSignup, setOpenSignup] = useState(false);
@@ -50,7 +50,7 @@ const Appbar = ({ handleDrawerToggle }) => {
     e.preventDefault();
 
     if (query) {
-      history.push(`/${query}`);
+      history.push(`/results/${query}`);
     }
 
     setQuery("");
@@ -109,7 +109,7 @@ const Appbar = ({ handleDrawerToggle }) => {
 
           <div className={classes.grow} />
 
-          {!currentUser && btn}
+          {loading ? "" : !currentUser && btn}
         </Toolbar>
         <Divider />
       </AppBar>
