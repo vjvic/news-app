@@ -20,7 +20,6 @@ export const addNews = (userID, newsID, item) => (dispatch) => {
 
 //get saved news from the database
 export const getSavedNews = (userID) => (dispatch) => {
-  dispatch({ type: ActionTypes.START_LOADING });
   db.collection("users")
     .doc(userID)
     .collection("saved")
@@ -32,7 +31,6 @@ export const getSavedNews = (userID) => (dispatch) => {
       });
 
       dispatch({ type: ActionTypes.GET_SAVED_NEWS, payload: arrData });
-      dispatch({ type: ActionTypes.END_LOADING });
     });
 };
 

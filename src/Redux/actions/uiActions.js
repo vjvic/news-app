@@ -7,7 +7,7 @@ export const openSnackbar = () => {
   };
 };
 
-//open snackbar
+//close snackbar
 export const closeSnackbar = () => {
   return {
     type: ActionTypes.CLOSE_SNACKBAR,

@@ -4,7 +4,7 @@ import { ActionTypes } from "Redux/constants/action-types";
 //login user
 export const login = (email, password) => async (dispatch) => {
   try {
-    const response = await authApi.post(
+    const { data } = await authApi.post(
       `/accounts:signInWithPassword?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
       {
         email: email,
@@ -12,13 +12,13 @@ export const login = (email, password) => async (dispatch) => {
       }
     );
 
-    localStorage.setItem("token", response.data.idToken);
+    localStorage.setItem("token", data.idToken);
 
-    dispatch({ type: ActionTypes.GET_TOKEN, payload: response.data.idToken });
+    dispatch({ type: ActionTypes.GET_TOKEN, payload: data.idToken });
   } catch (error) {
     dispatch({
       type: ActionTypes.SET_ERROR,
-      payload: error.response.data.error.message,
+      payload: "Failed to login",
     });
   }
 };
@@ -26,7 +26,7 @@ export const login = (email, password) => async (dispatch) => {
 //signup user
 export const signup = (email, password) => async (dispatch) => {
   try {
-    const response = await authApi.post(
+    const { data } = await authApi.post(
       `/accountss:signUp?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
       {
         email: email,
@@ -35,9 +35,9 @@ export const signup = (email, password) => async (dispatch) => {
       }
     );
 
-    localStorage.setItem("token", response.data.idToken);
+    localStorage.setItem("token", data.idToken);
 
-    dispatch({ type: ActionTypes.GET_TOKEN, payload: response.data.idToken });
+    dispatch({ type: ActionTypes.GET_TOKEN, payload: data.idToken });
   } catch {
     dispatch({ type: ActionTypes.SET_ERROR, payload: "Failed to signup" });
   }
@@ -45,14 +45,15 @@ export const signup = (email, password) => async (dispatch) => {
 
 //get user data
 export const getUserData = (token) => async (dispatch) => {
-  const response = await authApi.post(
+  dispatch({ type: ActionTypes.USER_LOADING });
+  const { data } = await authApi.post(
     `/accounts:lookup?key=${process.env.REACT_APP_FIREBASE_API_KEY}`,
     {
       idToken: token,
     }
   );
 
-  dispatch({ type: ActionTypes.SET_USER, payload: response.data.users });
+  dispatch({ type: ActionTypes.SET_USER, payload: data.users });
 };
 
 //logout

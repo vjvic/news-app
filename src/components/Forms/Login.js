@@ -27,8 +27,6 @@ const Login = ({ openLogin, handleCloseLogin }) => {
 
     if (email && password) {
       dispatch(login(email, password));
-
-      handleCloseLogin();
     }
 
     setEmail("");

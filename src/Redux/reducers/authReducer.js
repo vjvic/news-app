@@ -5,21 +5,19 @@ const initialToken = localStorage.getItem("token");
 const initialState = {
   token: initialToken,
   currentUser: "",
-  loading: true,
+  loading: false,
 };
 
 export const authReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case ActionTypes.GET_TOKEN:
-      return { ...state, token: payload };
+      return { ...state, token: payload, loading: false };
     case ActionTypes.SET_USER:
-      return { ...state, currentUser: payload };
+      return { ...state, currentUser: payload, loading: false };
     case ActionTypes.USER_LOGOUT:
       return { ...state, token: "", currentUser: "" };
-    case ActionTypes.START_LOADING:
+    case ActionTypes.USER_LOADING:
       return { ...state, loading: true };
-    case ActionTypes.END_LOADING:
-      return { ...state, loading: false };
     default:
       return state;
   }

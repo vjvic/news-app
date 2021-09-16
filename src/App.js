@@ -17,7 +17,9 @@ function App() {
 
   //set user
   useEffect(() => {
-    dispatch(getUserData(token));
+    if (token) {
+      dispatch(getUserData(token));
+    }
   }, [dispatch, token]);
 
   //get saved news

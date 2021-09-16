@@ -40,7 +40,6 @@ const Signup = ({ openSignup, handleCloseSignup }) => {
   const onSubmit = (data, e) => {
     dispatch(signup(data.email, data.password));
     e.target.reset();
-    handleCloseSignup();
   };
 
   return (

@@ -9,23 +9,22 @@ const headers = {
 //fetch latest news
 
 export const fetchNews = (counrty, page) => async (dispatch) => {
-  dispatch({ type: ActionTypes.START_LOADING });
+  dispatch({ type: ActionTypes.NEWS_LOADING });
 
-  const response = await newsApi.get("/latest_headlines", {
+  const { data } = await newsApi.get("/latest_headlines", {
     params: { countries: counrty, lang: "en", page, page_size: "12" },
     headers,
   });
 
-  dispatch({ type: ActionTypes.FETCH_LATEST, payload: response.data });
-  dispatch({ type: ActionTypes.END_LOADING });
+  dispatch({ type: ActionTypes.FETCH_LATEST, payload: data });
 };
 
 //fetch news by category
 
 export const fetchCategories = (value, country, page) => async (dispatch) => {
-  dispatch({ type: ActionTypes.START_LOADING });
+  dispatch({ type: ActionTypes.NEWS_LOADING });
 
-  const response = await newsApi.get("/latest_headlines", {
+  const { data } = await newsApi.get("/latest_headlines", {
     params: {
       countries: country,
       topic: value,
@@ -36,15 +35,14 @@ export const fetchCategories = (value, country, page) => async (dispatch) => {
     headers,
   });
 
-  dispatch({ type: ActionTypes.FETCH_CATEGORIES, payload: response.data });
-  dispatch({ type: ActionTypes.END_LOADING });
+  dispatch({ type: ActionTypes.FETCH_CATEGORIES, payload: data });
 };
 
 //search news
 
 export const searchNews = (query, country, page) => async (dispatch) => {
-  dispatch({ type: ActionTypes.START_LOADING });
-  const response = await newsApi.get("/search", {
+  dispatch({ type: ActionTypes.NEWS_LOADING });
+  const { data } = await newsApi.get("/search", {
     params: {
       q: query,
       countries: country,
@@ -55,6 +53,5 @@ export const searchNews = (query, country, page) => async (dispatch) => {
     headers,
   });
 
-  dispatch({ type: ActionTypes.FETCH_LATEST, payload: response.data });
-  dispatch({ type: ActionTypes.END_LOADING });
+  dispatch({ type: ActionTypes.FETCH_LATEST, payload: data });
 };
