@@ -1,4 +1,4 @@
-import React /* , { useState } */ from "react";
+import React from "react";
 import useStyles from "./styles";
 import {
   Backdrop,
@@ -10,11 +10,13 @@ import {
   Button,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
-import { signup } from "Redux/actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { closeSignup } from "Redux/actions/uiActions";
+import { signup } from "Redux/actions/authActions";
+import { arrangeText } from "utils/utils";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -24,10 +26,10 @@ const schema = yup.object().shape({
     .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
 
-const Signup = ({ openSignup, handleCloseSignup }) => {
+const Signup = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { errorText } = useSelector((state) => state.ui);
+  const { errorText, isSignup } = useSelector((state) => state.ui);
 
   const {
     register,
@@ -45,24 +47,26 @@ const Signup = ({ openSignup, handleCloseSignup }) => {
   return (
     <Modal
       className={classes.modal}
-      open={openSignup}
-      onClose={handleCloseSignup}
+      open={isSignup}
+      onClose={() => dispatch(closeSignup())}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
         timeout: 500,
       }}
     >
-      <Fade in={openSignup}>
+      <Fade in={isSignup}>
         <div className={classes.paper}>
           <Typography variant="h4" component="h2">
             Signup
           </Typography>
+
           {errorText && (
             <Alert severity="error" className={classes.error}>
-              {errorText}
+              {arrangeText(errorText)}
             </Alert>
           )}
+
           <form
             className={classes.form}
             onSubmit={handleSubmit(onSubmit)}

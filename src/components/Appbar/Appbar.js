@@ -14,37 +14,15 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { useHistory } from "react-router";
 import Login from "components/Forms/Login";
 import Signup from "components/Forms/Signup";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { openLogin, openSignup } from "Redux/actions/uiActions";
 
 const Appbar = ({ handleDrawerToggle }) => {
   const [query, setQuery] = useState("");
   const classes = useStyles();
   const history = useHistory();
-
+  const dispatch = useDispatch();
   const { currentUser, loading } = useSelector((state) => state.auth);
-
-  const [openLogin, setOpenLogin] = useState(false);
-  const [openSignup, setOpenSignup] = useState(false);
-
-  //open login
-  const handleOpenLogin = () => {
-    setOpenLogin(true);
-  };
-
-  //close login
-  const handleCloseLogin = () => {
-    setOpenLogin(false);
-  };
-
-  //open signup
-  const handleOpenSignup = () => {
-    setOpenSignup(true);
-  };
-
-  //close signup
-  const handleCloseSignup = () => {
-    setOpenSignup(false);
-  };
 
   //submit search
   const handleSubmit = (e) => {
@@ -60,12 +38,20 @@ const Appbar = ({ handleDrawerToggle }) => {
   const btn = (
     <div className={classes.btnWrapper}>
       {/* login button */}
-      <Button variant="outlined" color="primary" onClick={handleOpenLogin}>
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={() => dispatch(openLogin())}
+      >
         Login
       </Button>
 
       {/* signup button */}
-      <Button variant="contained" color="primary" onClick={handleOpenSignup}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => dispatch(openSignup())}
+      >
         Signup
       </Button>
     </div>
@@ -74,10 +60,10 @@ const Appbar = ({ handleDrawerToggle }) => {
   return (
     <>
       {/*  login */}
-      <Login openLogin={openLogin} handleCloseLogin={handleCloseLogin} />
+      <Login />
 
       {/*  signup */}
-      <Signup openSignup={openSignup} handleCloseSignup={handleCloseSignup} />
+      <Signup />
 
       <AppBar position="fixed" className={classes.appBar} elevation={0}>
         <Toolbar>

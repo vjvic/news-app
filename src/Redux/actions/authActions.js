@@ -1,5 +1,6 @@
 import authApi from "components/apis/authApi";
 import { ActionTypes } from "Redux/constants/action-types";
+import { setToken, removeToken } from "utils/utils";
 
 //login user
 export const login = (email, password) => async (dispatch) => {
@@ -12,13 +13,16 @@ export const login = (email, password) => async (dispatch) => {
       }
     );
 
-    localStorage.setItem("token", data.idToken);
+    setToken(data.idToken);
 
     dispatch({ type: ActionTypes.GET_TOKEN, payload: data.idToken });
+
+    dispatch({ type: ActionTypes.SET_ERROR, payload: "" });
+    dispatch({ type: ActionTypes.CLOSE_LOGIN });
   } catch (error) {
     dispatch({
       type: ActionTypes.SET_ERROR,
-      payload: "Failed to login",
+      payload: error.response.data.error.message,
     });
   }
 };
@@ -35,11 +39,12 @@ export const signup = (email, password) => async (dispatch) => {
       }
     );
 
-    localStorage.setItem("token", data.idToken);
-
+    setToken(data.idToken);
     dispatch({ type: ActionTypes.GET_TOKEN, payload: data.idToken });
-  } catch {
-    dispatch({ type: ActionTypes.SET_ERROR, payload: "Failed to signup" });
+    dispatch({ type: ActionTypes.CLOSE_SIGNUP });
+    dispatch({ type: ActionTypes.SET_ERROR, payload: "" });
+  } catch (error) {
+    dispatch({ type: ActionTypes.SET_ERROR, payload: error.message });
   }
 };
 
@@ -58,6 +63,6 @@ export const getUserData = (token) => async (dispatch) => {
 
 //logout
 export const logout = () => {
-  localStorage.removeItem("token");
+  removeToken();
   return { type: ActionTypes.USER_LOGOUT };
 };

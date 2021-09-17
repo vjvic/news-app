@@ -8,16 +8,17 @@ import {
   Box,
   Typography,
   Button,
-  capitalize,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
-import { login } from "Redux/actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
+import { closeLogin } from "Redux/actions/uiActions";
+import { login } from "Redux/actions/authActions";
+import { arrangeText } from "utils/utils";
 
-const Login = ({ openLogin, handleCloseLogin }) => {
+const Login = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { errorText } = useSelector((state) => state.ui);
+  const { errorText, isLogin } = useSelector((state) => state.ui);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,9 +26,7 @@ const Login = ({ openLogin, handleCloseLogin }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (email && password) {
-      dispatch(login(email, password));
-    }
+    if (email && password) dispatch(login(email, password));
 
     setEmail("");
     setPassword("");
@@ -36,24 +35,26 @@ const Login = ({ openLogin, handleCloseLogin }) => {
   return (
     <Modal
       className={classes.modal}
-      open={openLogin}
-      onClose={handleCloseLogin}
+      open={isLogin}
+      onClose={() => dispatch(closeLogin())}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
         timeout: 500,
       }}
     >
-      <Fade in={openLogin}>
+      <Fade in={isLogin}>
         <div className={classes.paper}>
           <Typography variant="h4" component="h2">
             Login
           </Typography>
+
           {errorText && (
             <Alert severity="error" className={classes.error}>
-              {capitalize(errorText.replace(/_/g, " ").toLowerCase())}
+              {arrangeText(errorText)}
             </Alert>
           )}
+
           <form
             className={classes.form}
             onSubmit={handleSubmit}
@@ -67,6 +68,7 @@ const Login = ({ openLogin, handleCloseLogin }) => {
                 fullWidth
               />
             </Box>
+
             <Box py={1}>
               <TextField
                 label="Password"
@@ -76,6 +78,7 @@ const Login = ({ openLogin, handleCloseLogin }) => {
                 type="password"
               />
             </Box>
+
             <Button
               variant="contained"
               color="primary"
