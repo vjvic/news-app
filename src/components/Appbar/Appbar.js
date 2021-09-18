@@ -8,6 +8,7 @@ import {
   Button,
   Divider,
   CircularProgress,
+  Typography,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -96,7 +97,15 @@ const Appbar = ({ handleDrawerToggle }) => {
 
           <div className={classes.grow} />
 
-          {loading ? <CircularProgress /> : !currentUser && btn}
+          {loading ? (
+            <CircularProgress />
+          ) : currentUser ? (
+            <Typography component="p">
+              Welcome <strong>{currentUser[0].displayName}</strong>
+            </Typography>
+          ) : (
+            btn
+          )}
         </Toolbar>
         <Divider />
       </AppBar>

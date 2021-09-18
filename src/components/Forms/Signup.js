@@ -20,6 +20,7 @@ import { arrangeText } from "utils/utils";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
+  username: yup.string().required(),
   password: yup.string().min(8).required(),
   confirmPassword: yup
     .string()
@@ -40,7 +41,7 @@ const Signup = () => {
   });
 
   const onSubmit = (data, e) => {
-    dispatch(signup(data.email, data.password));
+    dispatch(signup(data.email, data.password, data.username));
     e.target.reset();
   };
 
@@ -78,6 +79,17 @@ const Signup = () => {
                 label="Email"
                 {...register("email")}
                 helperText={errors?.email?.message}
+                fullWidth
+              />
+            </Box>
+
+            <Box py={1}>
+              <TextField
+                error={errors?.username?.message.length > 0}
+                label="Username"
+                type="text"
+                {...register("username")}
+                helperText={errors?.username?.message}
                 fullWidth
               />
             </Box>
