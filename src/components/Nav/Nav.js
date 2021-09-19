@@ -19,7 +19,6 @@ import { menuItems } from "./menuItems";
 import newsIcon from "assets/image/svg/newsIcon.svg";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "Redux/actions/authActions";
-/* import { Link } from "react-router-dom"; */
 
 const Nav = ({ mobileOpen, handleDrawerToggle, window }) => {
   const classes = useStyles();

@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { closeSignup } from "Redux/actions/uiActions";
+import { closeSignup, openLogin } from "Redux/actions/uiActions";
 import { signup } from "Redux/actions/authActions";
 import { arrangeText } from "utils/utils";
 
@@ -45,6 +45,11 @@ const Signup = () => {
     e.target.reset();
   };
 
+  const handleToggle = () => {
+    dispatch(closeSignup());
+    dispatch(openLogin());
+  };
+
   return (
     <Modal
       className={classes.modal}
@@ -58,7 +63,7 @@ const Signup = () => {
     >
       <Fade in={isSignup}>
         <div className={classes.paper}>
-          <Typography variant="h4" component="h2">
+          <Typography variant="h5" component="h2">
             Signup
           </Typography>
 
@@ -125,6 +130,15 @@ const Signup = () => {
               Signup
             </Button>
           </form>
+
+          <Box my={2}>
+            <Typography>
+              Already have an account?{" "}
+              <button className={classes.link} onClick={handleToggle}>
+                Login
+              </button>
+            </Typography>
+          </Box>
         </div>
       </Fade>
     </Modal>

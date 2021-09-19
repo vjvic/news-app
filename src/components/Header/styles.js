@@ -12,6 +12,7 @@ export default makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    flexWrap: "wrap",
     margin: "1rem 0",
   },
 }));

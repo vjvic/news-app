@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import { useDispatch, useSelector } from "react-redux";
-import { closeLogin } from "Redux/actions/uiActions";
+import { closeLogin, openSignup } from "Redux/actions/uiActions";
 import { login } from "Redux/actions/authActions";
 import { arrangeText } from "utils/utils";
 
@@ -32,6 +32,11 @@ const Login = () => {
     setPassword("");
   };
 
+  const handleToggle = () => {
+    dispatch(closeLogin());
+    dispatch(openSignup());
+  };
+
   return (
     <Modal
       className={classes.modal}
@@ -45,7 +50,7 @@ const Login = () => {
     >
       <Fade in={isLogin}>
         <div className={classes.paper}>
-          <Typography variant="h4" component="h2">
+          <Typography variant="h5" component="h2">
             Login
           </Typography>
 
@@ -88,6 +93,15 @@ const Login = () => {
               Login
             </Button>
           </form>
+
+          <Box my={2}>
+            <Typography>
+              Don't have an account?{" "}
+              <button className={classes.link} onClick={handleToggle}>
+                Signup
+              </button>
+            </Typography>
+          </Box>
         </div>
       </Fade>
     </Modal>

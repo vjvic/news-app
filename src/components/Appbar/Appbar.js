@@ -16,7 +16,8 @@ import { useHistory } from "react-router";
 import Login from "components/Forms/Login";
 import Signup from "components/Forms/Signup";
 import { useSelector, useDispatch } from "react-redux";
-import { openLogin, openSignup } from "Redux/actions/uiActions";
+import { openLogin } from "Redux/actions/uiActions";
+import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 
 const Appbar = ({ handleDrawerToggle }) => {
   const [query, setQuery] = useState("");
@@ -37,23 +38,16 @@ const Appbar = ({ handleDrawerToggle }) => {
   };
 
   const btn = (
-    <div className={classes.btnWrapper}>
+    <div>
       {/* login button */}
       <Button
         variant="outlined"
         color="primary"
         onClick={() => dispatch(openLogin())}
+        className={classes.loginBtn}
       >
-        Login
-      </Button>
-
-      {/* signup button */}
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => dispatch(openSignup())}
-      >
-        Signup
+        <AccountCircleOutlinedIcon />
+        <span className={classes.loginText}> Login</span>
       </Button>
     </div>
   );
@@ -83,6 +77,7 @@ const Appbar = ({ handleDrawerToggle }) => {
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
+
             <InputBase
               placeholder="Search…"
               value={query}
@@ -100,7 +95,7 @@ const Appbar = ({ handleDrawerToggle }) => {
           {loading ? (
             <CircularProgress />
           ) : currentUser ? (
-            <Typography component="p">
+            <Typography component="p" className={classes.username}>
               Welcome <strong>{currentUser[0].displayName}</strong>
             </Typography>
           ) : (

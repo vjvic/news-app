@@ -30,4 +30,12 @@ export default makeStyles((theme) => ({
   error: {
     marginTop: theme.spacing(2),
   },
+
+  link: {
+    cursor: "pointer",
+    border: "none",
+    background: "none",
+    padding: 0,
+    color: theme.palette.primary.main,
+  },
 }));

@@ -64,8 +64,17 @@ export default makeStyles((theme) => ({
     },
   },
 
-  btnWrapper: {
+  loginBtn: {
     display: "flex",
-    gridGap: 10,
+    alignItems: "center",
+    gridGap: "1rem",
+  },
+
+  loginText: {
+    paddingLeft: theme.spacing(1),
+  },
+
+  username: {
+    textAlign: "center",
   },
 }));
