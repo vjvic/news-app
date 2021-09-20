@@ -6,11 +6,16 @@ import { ActionTypes } from "Redux/constants/action-types";
 export const fetchNews = (counrty, page) => async (dispatch) => {
   dispatch({ type: ActionTypes.NEWS_LOADING });
 
-  const { data } = await newsApi.get("/latest_headlines", {
-    params: { countries: counrty, lang: "en", page, page_size: "12" },
-  });
+  try {
+    const { data } = await newsApi.get("/latest_headlines", {
+      params: { countries: counrty, lang: "en", page, page_size: "12" },
+    });
 
-  dispatch({ type: ActionTypes.FETCH_LATEST, payload: data });
+    dispatch({ type: ActionTypes.FETCH_LATEST, payload: data });
+    dispatch({ type: ActionTypes.NEWS_ERROR, payload: false });
+  } catch {
+    dispatch({ type: ActionTypes.NEWS_ERROR });
+  }
 };
 
 //fetch news by category
@@ -18,17 +23,22 @@ export const fetchNews = (counrty, page) => async (dispatch) => {
 export const fetchCategories = (value, country, page) => async (dispatch) => {
   dispatch({ type: ActionTypes.NEWS_LOADING });
 
-  const { data } = await newsApi.get("/latest_headlines", {
-    params: {
-      countries: country,
-      topic: value,
-      lang: "en",
-      page,
-      page_size: "12",
-    },
-  });
+  try {
+    const { data } = await newsApi.get("/latest_headlines", {
+      params: {
+        countries: country,
+        topic: value,
+        lang: "en",
+        page,
+        page_size: "12",
+      },
+    });
 
-  dispatch({ type: ActionTypes.FETCH_CATEGORIES, payload: data });
+    dispatch({ type: ActionTypes.FETCH_CATEGORIES, payload: data });
+    dispatch({ type: ActionTypes.NEWS_ERROR, payload: false });
+  } catch {
+    dispatch({ type: ActionTypes.NEWS_ERROR, payload: true });
+  }
 };
 
 //search news

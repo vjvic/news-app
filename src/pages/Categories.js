@@ -7,6 +7,7 @@ import { fetchCategories } from "Redux/actions/newsActions";
 import Header from "components/Header/Header";
 import Paginate from "components/Pagination/Paginate";
 import useStyles from "./styles";
+import Error from "components/Error/Error";
 
 const Categories = () => {
   const { value } = useParams();
@@ -14,7 +15,7 @@ const Categories = () => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
-  const { news, loading } = useSelector((state) => state.allNews);
+  const { news, loading, error } = useSelector((state) => state.allNews);
   const { country } = useSelector((state) => state.countries);
   const [page, setPage] = useState(1);
 
@@ -33,6 +34,8 @@ const Categories = () => {
         <CircularProgress />
       </div>
     );
+
+  if (error) return <Error text={"Could not fetch the data"} />;
 
   return (
     <>

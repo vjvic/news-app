@@ -3,10 +3,11 @@ import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { searchNews } from "Redux/actions/newsActions";
 import NewsItem from "components/News/NewsItem/NewsItem";
-import { Grid, CircularProgress, Box, Typography } from "@material-ui/core";
+import { Grid, CircularProgress } from "@material-ui/core";
 import Header from "components/Header/Header";
 import Paginate from "components/Pagination/Paginate";
 import useStyles from "./styles";
+import Error from "components/Error/Error";
 
 const Result = () => {
   const { value } = useParams();
@@ -33,12 +34,7 @@ const Result = () => {
       </div>
     );
 
-  if (!news.articles)
-    return (
-      <Box textAlign="center" my={5}>
-        <Typography>No results found</Typography>
-      </Box>
-    );
+  if (!news.articles) return <Error text={"No results found"} />;
 
   return (
     <>
