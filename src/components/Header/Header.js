@@ -1,29 +1,29 @@
-import React, { useEffect } from "react";
+import React from "react";
 import useStyles from "./styles";
 import {
   Typography,
-  FormControl,
+  /* FormControl,
   InputLabel,
   MenuItem,
-  Select,
+  Select, */
   capitalize,
 } from "@material-ui/core";
-import { fetchCountries, selectCountry } from "Redux/actions/countriesActions";
-import { useDispatch, useSelector } from "react-redux";
+/* import { fetchCountries, selectCountry } from "Redux/actions/countriesActions"; */
+/* import { useDispatch, useSelector } from "react-redux"; */
 
 const Header = ({ text }) => {
   const classes = useStyles();
 
-  const { countries, country, loading } = useSelector(
+  /* const { countries, country, loading } = useSelector(
     (state) => state.countries
-  );
-  const dispatch = useDispatch();
+  ); */
+  /*  const dispatch = useDispatch(); */
 
-  useEffect(() => {
+  /*   useEffect(() => {
     dispatch(fetchCountries());
-  }, [dispatch]);
+  }, [dispatch]); */
 
-  if (loading) return "";
+  /*  if (loading) return ""; */
 
   return (
     <div className={classes.header}>
@@ -31,7 +31,7 @@ const Header = ({ text }) => {
         {capitalize(text)}
       </Typography>
 
-      <FormControl className={classes.formControl}>
+      {/*  <FormControl className={classes.formControl}>
         <InputLabel>Country</InputLabel>
         <Select
           value={country}
@@ -43,7 +43,7 @@ const Header = ({ text }) => {
             </MenuItem>
           ))}
         </Select>
-      </FormControl>
+      </FormControl> */}
     </div>
   );
 };

@@ -1,11 +1,12 @@
 import authApi from "components/apis/authApi";
 import { ActionTypes } from "Redux/constants/action-types";
 import { setToken, removeToken } from "utils/utils";
+import request from "request/request";
 
 //login user
 export const login = (email, password) => async (dispatch) => {
   try {
-    const { data } = await authApi.post(`/accounts:signInWithPassword`, {
+    const { data } = await authApi.post(request.login, {
       email,
       password,
     });
@@ -26,7 +27,7 @@ export const login = (email, password) => async (dispatch) => {
 //signup user
 export const signup = (email, password, userName) => (dispatch) => {
   authApi
-    .post(`/accounts:signUp`, {
+    .post(request.signup, {
       email,
       password,
       returnSecureToken: true,
@@ -35,7 +36,7 @@ export const signup = (email, password, userName) => (dispatch) => {
       setToken(response.data.idToken);
       dispatch({ type: ActionTypes.GET_TOKEN, payload: response.data.idToken });
 
-      return authApi.post(`/accounts:update`, {
+      return authApi.post(request.update, {
         idToken: response.data.idToken,
         displayName: userName,
       });
@@ -53,7 +54,7 @@ export const signup = (email, password, userName) => (dispatch) => {
 export const getUserData = (idToken) => async (dispatch) => {
   dispatch({ type: ActionTypes.USER_LOADING });
 
-  const { data } = await authApi.post(`/accounts:lookup`, { idToken });
+  const { data } = await authApi.post(request.lookup, { idToken });
 
   dispatch({ type: ActionTypes.SET_USER, payload: data.users });
 };
