@@ -7,6 +7,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { useSelector, useDispatch } from "react-redux";
 import { closeSnackbar } from "Redux/actions/uiActions";
+import { StylesProvider } from "@material-ui/core/styles";
 
 const Layout = ({ children }) => {
   const classes = useStyles();
@@ -25,7 +26,7 @@ const Layout = ({ children }) => {
   };
 
   return (
-    <>
+    <StylesProvider injectFirst>
       <Snackbar
         open={isSnackbar}
         autoHideDuration={2000}
@@ -51,7 +52,7 @@ const Layout = ({ children }) => {
           </main>
         </Container>
       </div>
-    </>
+    </StylesProvider>
   );
 };
 

@@ -34,7 +34,7 @@ export const getSavedNews = (userID) => (dispatch) => {
     });
 };
 
-//delete the movie from the database
+//delete the news from the database
 
 export const deleteNews = (userID, newsID) => (dispatch) => {
   db.collection("users").doc(userID).collection("saved").doc(newsID).delete();
